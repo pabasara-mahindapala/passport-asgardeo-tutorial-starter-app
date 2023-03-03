@@ -6,7 +6,7 @@ function fetchTodos(req, res, next) {
     req.user.id
   ], function(err, rows) {
     if (err) { return next(err); }
-    
+
     var todos = rows.map(function(row) {
       return {
         id: row.id,
