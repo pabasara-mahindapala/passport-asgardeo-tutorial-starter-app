@@ -42,8 +42,7 @@ router.post('/logout', function(req, res, next) {
   req.logout(function(err) {
     if (err) { return next(err); }
     var params = {
-      client_id: process.env['AUTH0_CLIENT_ID'],
-      returnTo: 'http://localhost:3000/'
+      post_logout_redirect_uri: 'http://localhost:3000/'
     };
     res.redirect('https://' + process.env['AUTH0_DOMAIN'] + '/oidc/logout?' + qs.stringify(params));
   });

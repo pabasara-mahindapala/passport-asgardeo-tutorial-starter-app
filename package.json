@@ -1,35 +1,14 @@
 {
-  "name": "todos-express-starter",
+  "name": "passport-asgardeo-tutorial",
   "version": "0.0.0",
   "private": true,
-  "description": "Starter todo app using Express, Passport, and SQLite for sign in.",
+  "description": "Sample Application for authenticating with passport-asgardeo",
   "keywords": [
     "example",
     "express",
     "passport",
     "sqlite"
   ],
-  "author": {
-    "name": "Jared Hanson",
-    "email": "jaredhanson@gmail.com",
-    "url": "https://www.jaredhanson.me/"
-  },
-  "homepage": "https://github.com/passport/todos-express-starter",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/passport/todos-express-starter.git"
-  },
-  "bugs": {
-    "url": "https://github.com/passport/todos-express-starter/issues"
-  },
-  "funding": {
-    "type": "github",
-    "url": "https://github.com/sponsors/jaredhanson"
-  },
-  "license": "Unlicense",
-  "scripts": {
-    "start": "node ./bin/www"
-  },
   "dependencies": {
     "connect-sqlite3": "^0.9.13",
     "cookie-parser": "~1.4.4",
@@ -46,5 +25,8 @@
     "passport-strategy": "^1.0.0",
     "pluralize": "^8.0.0",
     "sqlite3": "^5.0.2"
+  },
+  "scripts": {
+    "start": "node ./bin/www"
   }
 }
