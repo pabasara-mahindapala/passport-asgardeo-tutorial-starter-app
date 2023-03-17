@@ -21,7 +21,7 @@
     "mkdirp": "^1.0.4",
     "morgan": "~1.9.1",
     "passport": "^0.6.0",
-    "passport-asgardeo": "file:../passport-asgardeo",
+    "passport-asgardeo": "file:../../passport-asgardeo",
     "passport-strategy": "^1.0.0",
     "pluralize": "^8.0.0",
     "sqlite3": "^5.0.2"
