@@ -15,19 +15,30 @@ passport.use(
       callbackURL: "/oauth2/redirect",
       scope: ["profile"],
     },
-    function verify(issuer, profile, cb) {
-      console.log("\nIssuer: " + issuer);
-      console.log("\nProfile: " + JSON.stringify(profile));
-      console.log("\ncb: " + cb);
-
-      return cb(null, profile);
+    function verify(
+      issuer,
+      uiProfile,
+      idProfile,
+      context,
+      idToken,
+      accessToken,
+      refreshToken,
+      params,
+      verified
+    ) {
+      return verified(null, uiProfile);
     }
   )
 );
 
 passport.serializeUser(function (user, cb) {
   process.nextTick(function () {
-    cb(null, { id: user.id, username: user.username, name: user.displayName });
+    cb(null, {
+      id: user.id,
+      username: user._json.username,
+      givenName: user.name.givenName,
+      familyName: user.name.familyName,
+    });
   });
 });
 
