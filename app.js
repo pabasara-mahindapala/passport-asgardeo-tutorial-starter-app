@@ -11,7 +11,7 @@ var SQLiteStore = require("connect-sqlite3")(session);
 
 var indexRouter = require("./routes/index");
 var authRouter = require("./routes/auth");
-var profileRouter = require("./routes/profile");
+var protectedRouter = require("./routes/protected");
 
 var app = express();
 
@@ -39,7 +39,7 @@ app.use(passport.authenticate("session"));
 
 app.use("/", indexRouter);
 app.use("/", authRouter);
-app.use("/", profileRouter);
+app.use("/", protectedRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

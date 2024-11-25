@@ -1,15 +1,14 @@
 var passport = require("passport");
 var AsgardeoStrategy = require("passport-asgardeo");
+const ASGARDEO_BASE_URL = "https://api.asgardeo.io/t/";
 
 passport.use(
   new AsgardeoStrategy(
     {
-      issuer: "https://" + process.env.ASGARDEO_DOMAIN + "/oauth2/token",
-      authorizationURL:
-        "https://" + process.env.ASGARDEO_DOMAIN + "/oauth2/authorize",
-      tokenURL: "https://" + process.env.ASGARDEO_DOMAIN + "/oauth2/token",
-      userInfoURL:
-        "https://" + process.env.ASGARDEO_DOMAIN + "/oauth2/userinfo",
+      issuer: ASGARDEO_BASE_URL + process.env.ASGARDEO_ORGANISATION + "/oauth2/token",
+      authorizationURL: ASGARDEO_BASE_URL + process.env.ASGARDEO_ORGANISATION + "/oauth2/authorize",
+      tokenURL: ASGARDEO_BASE_URL + process.env.ASGARDEO_ORGANISATION + "/oauth2/token",
+      userInfoURL: ASGARDEO_BASE_URL + process.env.ASGARDEO_ORGANISATION + "/oauth2/userinfo",
       clientID: process.env.ASGARDEO_CLIENT_ID,
       clientSecret: process.env.ASGARDEO_CLIENT_SECRET,
       callbackURL: "/oauth2/redirect",
@@ -70,11 +69,7 @@ router.post("/logout", function (req, res, next) {
     var params = {
       post_logout_redirect_uri: "http://localhost:3000/",
     };
-    res.redirect(
-      "https://" +
-        process.env.ASGARDEO_DOMAIN +
-        "/oidc/logout?" +
-        qs.stringify(params)
+    res.redirect(ASGARDEO_BASE_URL + process.env.ASGARDEO_ORGANISATION + "/oidc/logout?" + qs.stringify(params)
     );
   });
 });
