@@ -5,14 +5,22 @@ const ASGARDEO_BASE_URL = "https://api.asgardeo.io/t/";
 passport.use(
   new AsgardeoStrategy(
     {
-      issuer: ASGARDEO_BASE_URL + process.env.ASGARDEO_ORGANISATION + "/oauth2/token",
-      authorizationURL: ASGARDEO_BASE_URL + process.env.ASGARDEO_ORGANISATION + "/oauth2/authorize",
-      tokenURL: ASGARDEO_BASE_URL + process.env.ASGARDEO_ORGANISATION + "/oauth2/token",
-      userInfoURL: ASGARDEO_BASE_URL + process.env.ASGARDEO_ORGANISATION + "/oauth2/userinfo",
+      issuer:
+        ASGARDEO_BASE_URL + process.env.ASGARDEO_ORGANISATION + "/oauth2/token",
+      authorizationURL:
+        ASGARDEO_BASE_URL +
+        process.env.ASGARDEO_ORGANISATION +
+        "/oauth2/authorize",
+      tokenURL:
+        ASGARDEO_BASE_URL + process.env.ASGARDEO_ORGANISATION + "/oauth2/token",
+      userInfoURL:
+        ASGARDEO_BASE_URL +
+        process.env.ASGARDEO_ORGANISATION +
+        "/oauth2/userinfo",
       clientID: process.env.ASGARDEO_CLIENT_ID,
       clientSecret: process.env.ASGARDEO_CLIENT_SECRET,
       callbackURL: "/oauth2/redirect",
-      scope: ["profile"],
+      scope: ["profile internal_login"],
     },
     function verify(
       issuer,
@@ -25,7 +33,10 @@ passport.use(
       params,
       verified
     ) {
-      return verified(null, uiProfile);
+      return verified(null, {
+        uiProfile: uiProfile,
+        accessToken: accessToken,
+      });
     }
   )
 );
@@ -33,10 +44,11 @@ passport.use(
 passport.serializeUser(function (user, cb) {
   process.nextTick(function () {
     cb(null, {
-      id: user.id,
-      username: user._json.username,
-      givenName: user.name.givenName,
-      familyName: user.name.familyName,
+      id: user?.uiProfile?.id,
+      username: user?.uiProfile?._json?.username,
+      givenName: user?.uiProfile?.name?.givenName,
+      familyName: user?.uiProfile?.name?.familyName,
+      accessToken: user?.accessToken,
     });
   });
 });
@@ -69,7 +81,11 @@ router.post("/logout", function (req, res, next) {
     var params = {
       post_logout_redirect_uri: "http://localhost:3000/",
     };
-    res.redirect(ASGARDEO_BASE_URL + process.env.ASGARDEO_ORGANISATION + "/oidc/logout?" + qs.stringify(params)
+    res.redirect(
+      ASGARDEO_BASE_URL +
+        process.env.ASGARDEO_ORGANISATION +
+        "/oidc/logout?" +
+        qs.stringify(params)
     );
   });
 });
